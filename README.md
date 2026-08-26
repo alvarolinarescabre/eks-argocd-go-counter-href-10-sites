@@ -13,37 +13,37 @@ manifests and then hands off control to Argo CD's own sync loop.
 ## Architecture
 
 ```
-                         ┌─────────────────────────────────────────────┐
-                         │                 AWS Account                 │
+                         ┌──────────────────────────────────────────────┐
+                         │                 AWS Account                  │
                          │                                              │
-                         │   ┌───────────────── VPC ─────────────────┐ │
+                         │   ┌───────────────── VPC ──────────────────┐ │
                          │   │  Public subnets   Private subnets      │ │
                          │   │  (NAT GW, NLB)     (EKS nodes)         │ │
                          │   └────────────────────────────────────────┘ │
                          │                     │                        │
-                         │           ┌─────────▼─────────┐              │
-                         │           │   EKS Cluster      │              │
-                         │           │  (EKS Auto Mode /  │              │
-                         │           │  compute_config)   │              │
-                         │           │                     │              │
-                         │           │  ┌───────────────┐  │              │
-                         │           │  │   Argo CD     │  │              │
-                         │           │  │ (helm_release)│  │              │
-                         │           │  └───────┬───────┘  │              │
-                         │           │          │ manages   │              │
-                         │           │  ┌───────▼───────┐  │              │
-                         │           │  │ Gateway API    │ │              │
-                         │           │  │ CRDs + kgateway│ │              │
-                         │           │  │ (Argo apps)    │ │              │
-                         │           │  └───────┬───────┘  │              │
-                         │           │          │ routes    │              │
-                         │           │  ┌───────▼───────┐  │              │
-                         │           │  │ counter-api    │ │              │
-                         │           │  │ (Argo app, from│ │              │
-                         │           │  │ external repo) │ │              │
-                         │           │  └───────────────┘  │              │
-                         │           └─────────────────────┘              │
-                         └─────────────────────────────────────────────┘
+                         │           ┌─────────▼───────────┐            │
+                         │           │   EKS Cluster       │            │
+                         │           │  (EKS Auto Mode /   │            │
+                         │           │  compute_config)    │            │
+                         │           │                     │            │
+                         │           │  ┌───────────────┐  │            │
+                         │           │  │   Argo CD     │  │            │
+                         │           │  │ (helm_release)│  │            │
+                         │           │  └───────┬───────┘  │            │
+                         │           │          │ manages  │            │
+                         │           │  ┌───────▼───────┐  │            │
+                         │           │  │ Gateway API    │ │            │
+                         │           │  │ CRDs + kgateway│ │            │
+                         │           │  │ (Argo apps)    │ │            │
+                         │           │  └───────┬───────┘  │            │
+                         │           │          │ routes   │            │
+                         │           │  ┌───────▼───────┐  │            │
+                         │           │  │ counter-api    │ │            │
+                         │           │  │ (Argo app, from│ │            │
+                         │           │  │ external repo) │ │            │
+                         │           │  └───────────────┘  │            │
+                         │           └─────────────────────┘            │
+                         └──────────────────────────────────────────────┘
 ```
 
 **Bootstrap flow (Terraform):**
