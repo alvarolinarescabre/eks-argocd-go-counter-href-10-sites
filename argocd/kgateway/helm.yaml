@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kgateway-helm
+  namespace: argocd
+spec:
+  destination:
+    namespace: kgateway-system
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    chart: kgateway
+    helm:
+      skipCrds: false
+      parameters:
+      - name: controller.image.pullPolicy
+        value: "Always"
+    repoURL: cr.kgateway.dev/kgateway-dev/charts
+    targetRevision: v2.4.3
+  syncPolicy:
+    automated:
+      prune: true 
+      selfHeal: true 
+    syncOptions:
+    - CreateNamespace=true 

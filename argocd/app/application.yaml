@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: counter-api
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/alvarolinarescabre/go-counter-href-10-sites.git
+    targetRevision: main
+    path: deploy/helm/counter-api
+    values: values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: counter-api
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

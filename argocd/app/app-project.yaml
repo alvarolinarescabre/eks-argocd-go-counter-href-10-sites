@@ -1,0 +1,13 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: go-counter-href-10-sites-project
+  namespace: argocd
+spec:
+  description: Go Gin App to Get href From 10 Websites
+  sourceRepos:
+  - '*'
+  destinations:
+  - server: https://kubernetes.default.svc
+    namespace: default
+    

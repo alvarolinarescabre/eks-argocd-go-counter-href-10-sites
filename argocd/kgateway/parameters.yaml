@@ -1,0 +1,12 @@
+apiVersion: gateway.kgateway.dev/v1alpha1
+kind: GatewayParameters
+metadata:
+  name: public-nlb-params
+  namespace: kgateway-system
+spec:
+  kube:
+    service:
+      extraAnnotations:
+        service.beta.kubernetes.io/aws-load-balancer-type: "external"
+        service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
+        service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: "ip"
